@@ -1,0 +1,56 @@
+# Node.js
+node_modules/
+client/node_modules/
+server/node_modules/
+npm-debug.log
+.env
+.DS_Store
+
+# Frontend (React) build output
+/client/build/
+/client/dist/
+
+# Backend (Express)
+# You might have a separate .env file for the backend, or a single one at the root.
+# If you have a separate backend folder, you might want to put .env inside it.
+# For example: /server/.env
+
+# MongoDB (if you have local db files that aren't managed by a cloud service)
+# For example, if you're using a local MongoDB instance and storing its data files
+# db/
+# *.lock
+
+# Editor-specific files
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Logs
+logs/
+*.log
+
+# Test reports
+coverage/
+.nyc_output/
+
+# Dependency directories
+jspm_packages/
+
+# Package manager files
+package-lock.json
+yarn.lock
+
+# Miscellaneous
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# If you're using Docker, you might want to ignore these
+# .dockerignore
+# docker-compose.override.yml
