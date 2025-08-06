@@ -12,7 +12,7 @@ const LoginPage = ({ onLoginSuccess }) => { // Removed onSignUpClick prop
     setErrorMessage('');
 
     try {
-      const response = await fetch('http://localhost:5000/api/auth/login', {
+      const response = await fetch('https://expense-tracker-kghc.onrender.com/api/auth/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -114,15 +114,7 @@ const LoginPage = ({ onLoginSuccess }) => { // Removed onSignUpClick prop
               </label>
             </div>
 
-            <div className="text-sm">
-              <button
-                type="button"
-                onClick={() => console.log('Forgot password clicked')}
-                className="font-medium text-indigo-600 hover:text-indigo-500 transition duration-200 ease-in-out"
-              >
-                Forgot your password?
-              </button>
-            </div>
+            
           </div>
 
           <div>

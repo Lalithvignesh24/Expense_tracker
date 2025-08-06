@@ -30,7 +30,7 @@ const AddTransactionModal = ({ isOpen, onClose, selectedWallet, onTransactionAdd
       }
 
       try {
-        const response = await fetch('http://localhost:5000/api/categories', {
+        const response = await fetch('https://expense-tracker-kghc.onrender.com/api/categories', {
           headers: {
             'Authorization': `Bearer ${token}`,
           },
@@ -101,7 +101,7 @@ const AddTransactionModal = ({ isOpen, onClose, selectedWallet, onTransactionAdd
     }
 
     try {
-      const response = await fetch('http://localhost:5000/api/expenses', {
+      const response = await fetch('https://expense-tracker-kghc.onrender.com/api/expenses', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

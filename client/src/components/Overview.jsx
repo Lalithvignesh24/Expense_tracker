@@ -21,7 +21,7 @@ const Overview = () => {
 
       try {
         // Fetch Wallets to calculate total balance
-        const walletsResponse = await fetch('http://localhost:5000/api/wallets', {
+        const walletsResponse = await fetch('https://expense-tracker-kghc.onrender.com/api/wallets', {
           headers: {
             'Authorization': `Bearer ${token}`,
           },
@@ -38,7 +38,7 @@ const Overview = () => {
         }
 
         // Fetch Expenses/Transactions to calculate total income and total expenses
-        const expensesResponse = await fetch('http://localhost:5000/api/expenses', {
+        const expensesResponse = await fetch('https://expense-tracker-kghc.onrender.com/api/expenses', {
           headers: {
             'Authorization': `Bearer ${token}`,
           },

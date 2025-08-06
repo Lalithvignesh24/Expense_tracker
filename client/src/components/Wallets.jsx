@@ -28,7 +28,7 @@ const Wallets = () => {
       return;
     }
     try {
-      const response = await fetch('http://localhost:5000/api/wallets', {
+      const response = await fetch('https://expense-tracker-kghc.onrender.com/api/wallets', {
         headers: {
           'Authorization': `Bearer ${token}`,
         },
@@ -100,7 +100,7 @@ const Wallets = () => {
       let response;
       if (currentWallet) {
         // Update existing wallet
-        response = await fetch(`http://localhost:5000/api/wallets/${currentWallet._id}`, {
+        response = await fetch(`https://expense-tracker-kghc.onrender.com/api/wallets/${currentWallet._id}`, {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',
@@ -110,7 +110,7 @@ const Wallets = () => {
         });
       } else {
         // Add new wallet
-        response = await fetch('http://localhost:5000/api/wallets', {
+        response = await fetch('https://expense-tracker-kghc.onrender.com/api/wallets', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -147,7 +147,7 @@ const Wallets = () => {
     }
 
     try {
-      const response = await fetch(`http://localhost:5000/api/wallets/${id}`, {
+      const response = await fetch(`https://expense-tracker-kghc.onrender.com/api/wallets/${id}`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${token}`,

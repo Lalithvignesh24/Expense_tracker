@@ -190,7 +190,7 @@ const ImportTransactionsModal = ({ isOpen, onClose, onImport, file, wallets }) =
     }
 
     try {
-      const response = await fetch('http://localhost:5000/api/expenses/import-bulk', {
+      const response = await fetch('https://expense-tracker-kghc.onrender.com/api/expenses/import-bulk', {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`,

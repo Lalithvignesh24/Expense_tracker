@@ -43,7 +43,7 @@ const Transactions = ({ setActiveSection, resetTrigger }) => { // Added resetTri
       return;
     }
     try {
-      const response = await fetch('http://localhost:5000/api/expenses', { // Assuming this fetches all transactions
+      const response = await fetch('https://expense-tracker-kghc.onrender.com/api/expenses', { // Assuming this fetches all transactions
         headers: {
           'Authorization': `Bearer ${token}`,
         },
@@ -73,7 +73,7 @@ const Transactions = ({ setActiveSection, resetTrigger }) => { // Added resetTri
       return;
     }
     try {
-      const response = await fetch('http://localhost:5000/api/wallets', {
+      const response = await fetch('https://expense-tracker-kghc.onrender.com/api/wallets', {
         headers: {
           'Authorization': `Bearer ${token}`,
         },
@@ -154,7 +154,7 @@ const Transactions = ({ setActiveSection, resetTrigger }) => { // Added resetTri
       return;
     }
     try {
-      const response = await fetch('http://localhost:5000/api/expenses/reset-incomes', {
+      const response = await fetch('https://expense-tracker-kghc.onrender.com/api/expenses/reset-incomes', {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -188,7 +188,7 @@ const Transactions = ({ setActiveSection, resetTrigger }) => { // Added resetTri
     }
 
     try {
-      const response = await fetch('http://localhost:5000/api/expenses/reset-expenses', {
+      const response = await fetch('https://expense-tracker-kghc.onrender.com/api/expenses/reset-expenses', {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -232,7 +232,7 @@ const Transactions = ({ setActiveSection, resetTrigger }) => { // Added resetTri
 
     try {
       // Assuming backend endpoint for single transaction deletion is /api/expenses/:id
-      const response = await fetch(`http://localhost:5000/api/expenses/${transactionToDelete._id}`, {
+      const response = await fetch(`https://expense-tracker-kghc.onrender.com/api/expenses/${transactionToDelete._id}`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${token}`,

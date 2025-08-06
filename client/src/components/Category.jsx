@@ -26,7 +26,7 @@ const Category = () => {
       return;
     }
     try {
-      const response = await fetch('http://localhost:5000/api/categories', {
+      const response = await fetch('https://expense-tracker-kghc.onrender.com/api/categories', {
         headers: {
           'Authorization': `Bearer ${token}`,
         },
@@ -92,7 +92,7 @@ const Category = () => {
       let response;
       if (currentCategory) {
         // Update existing category
-        response = await fetch(`http://localhost:5000/api/categories/${currentCategory._id}`, {
+        response = await fetch(`https://expense-tracker-kghc.onrender.com/api/categories/${currentCategory._id}`, {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',
@@ -102,7 +102,7 @@ const Category = () => {
         });
       } else {
         // Add new category
-        response = await fetch('http://localhost:5000/api/categories', {
+        response = await fetch('https://expense-tracker-kghc.onrender.com/api/categories', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -139,7 +139,7 @@ const Category = () => {
     }
 
     try {
-      const response = await fetch(`http://localhost:5000/api/categories/${id}`, {
+      const response = await fetch(`https://expense-tracker-kghc.onrender.com/api/categories/${id}`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${token}`,

@@ -34,7 +34,7 @@ const DashboardPage = ({ onLogout }) => {
       try {
         // Send a request to a protected route to check token validity
         // A simple GET request to /api/expenses or /api/wallets would suffice
-        const response = await fetch('http://localhost:5000/api/expenses', {
+        const response = await fetch('https://expense-tracker-kghc.onrender.com/api/expenses', {
           method: 'GET',
           headers: {
             'Authorization': `Bearer ${token}`,

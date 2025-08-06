@@ -21,7 +21,7 @@ const SignUpPage = () => { // Removed onLoginClick prop as it's handled internal
     }
 
     try {
-      const response = await fetch('http://localhost:5000/api/auth/register', {
+      const response = await fetch('https://expense-tracker-kghc.onrender.com/api/auth/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

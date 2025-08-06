@@ -4,7 +4,7 @@ import WalletSelectionModal from '../components/modals/WalletSelectionModal';
 import AddTransactionModal from '../components/modals/AddTransactionModal';
 import ImportTransactionsModal from '../components/modals/ImportTransactionsModal';
 
-const Transactions = ({ setActiveSection, resetTrigger }) => { // Added resetTrigger prop
+const Transactions = ({ setActiveSection }) => {
   const [isWalletSelectionModalOpen, setIsWalletSelectionModalOpen] = useState(false);
   const [isAddTransactionModalOpen, setIsAddTransactionModalOpen] = useState(false);
   const [isImportTransactionsModalOpen, setIsImportTransactionsModalOpen] = useState(false);
@@ -29,8 +29,6 @@ const Transactions = ({ setActiveSection, resetTrigger }) => { // Added resetTri
   // NEW: State for single transaction delete confirmation
   const [showConfirmDeleteTransaction, setShowConfirmDeleteTransaction] = useState(false);
   const [transactionToDelete, setTransactionToDelete] = useState(null); // Stores the transaction object to be deleted
-  // NEW: State for reset income confirmation
-  const [showConfirmResetIncomes, setShowConfirmResetIncomes] = useState(false);
 
   // Memoize fetchTransactions to prevent unnecessary re-renders in useEffect
   const fetchTransactions = useCallback(async () => {
@@ -43,7 +41,7 @@ const Transactions = ({ setActiveSection, resetTrigger }) => { // Added resetTri
       return;
     }
     try {
-      const response = await fetch('http://localhost:5000/api/expenses', { // Assuming this fetches all transactions
+      const response = await fetch('https://expense-tracker-kghc.onrender.com/api/expenses', {
         headers: {
           'Authorization': `Bearer ${token}`,
         },
@@ -73,7 +71,7 @@ const Transactions = ({ setActiveSection, resetTrigger }) => { // Added resetTri
       return;
     }
     try {
-      const response = await fetch('http://localhost:5000/api/wallets', {
+      const response = await fetch('https://expense-tracker-kghc.onrender.com/api/wallets', {
         headers: {
           'Authorization': `Bearer ${token}`,
         },
@@ -99,7 +97,7 @@ const Transactions = ({ setActiveSection, resetTrigger }) => { // Added resetTri
   useEffect(() => {
     fetchWallets();
     fetchTransactions();
-  }, [fetchWallets, fetchTransactions, resetTrigger]); // Depend on memoized functions and resetTrigger
+  }, [fetchWallets, fetchTransactions]); // Depend on memoized functions
 
   const handleAddTransactionClick = () => {
     if (wallets.length === 0) {
@@ -144,40 +142,6 @@ const Transactions = ({ setActiveSection, resetTrigger }) => { // Added resetTri
     }
   };
 
-  // NEW: handleResetIncomes function
-  const handleResetIncomes = async () => {
-    setShowConfirmResetIncomes(false); // Close confirmation modal
-    setMessage('');
-    const token = localStorage.getItem('token');
-    if (!token) {
-      setMessage('Authentication token missing. Please log in again.');
-      return;
-    }
-    try {
-      const response = await fetch('http://localhost:5000/api/expenses/reset-incomes', {
-        method: 'DELETE',
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json'
-        },
-      });
-
-      if (response.ok) {
-        setMessage('All income transactions reset successfully!');
-        fetchTransactions();
-        fetchWallets();
-        setTimeout(() => setMessage(''), 3000);
-      } else {
-        const data = await response.json();
-        setMessage(data.message || 'Failed to reset incomes.');
-      }
-    } catch (err) {
-      console.error('Error resetting incomes:', err);
-      setMessage('Network error or server unavailable. Failed to reset incomes.');
-    }
-  };
-
-
   const handleResetExpenses = async () => {
     setShowConfirmResetExpenses(false); // Close confirmation modal
     setMessage('');
@@ -188,7 +152,7 @@ const Transactions = ({ setActiveSection, resetTrigger }) => { // Added resetTri
     }
 
     try {
-      const response = await fetch('http://localhost:5000/api/expenses/reset-expenses', {
+      const response = await fetch('https://expense-tracker-kghc.onrender.com/api/expenses/reset-expenses', {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -232,7 +196,7 @@ const Transactions = ({ setActiveSection, resetTrigger }) => { // Added resetTri
 
     try {
       // Assuming backend endpoint for single transaction deletion is /api/expenses/:id
-      const response = await fetch(`http://localhost:5000/api/expenses/${transactionToDelete._id}`, {
+      const response = await fetch(`https://expense-tracker-kghc.onrender.com/api/expenses/${transactionToDelete._id}`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -453,7 +417,7 @@ const Transactions = ({ setActiveSection, resetTrigger }) => { // Added resetTri
                 <div className="flex items-center gap-4">
                   <div className="text-right">
                     <p className={`text-lg font-bold ${transaction.type === 'expense' ? 'text-red-600' : 'text-green-600'}`}>
-                      {transaction.type === 'expense' ? '-' : '+'}{transaction.walletId?.currency || '₹'}{transaction.amount.toFixed(2)}
+                      {transaction.type === 'expense' ? '-' : '+'}{transaction.walletId?.currency || '₹'} {transaction.amount.toFixed(2)}
                     </p>
                     <p className="text-sm text-gray-500">{new Date(transaction.date).toLocaleDateString()}</p>
                   </div>
@@ -529,33 +493,7 @@ const Transactions = ({ setActiveSection, resetTrigger }) => { // Added resetTri
         </div>
       )}
 
-      {/* NEW: Confirmation Modal for Reset Incomes */}
-      {showConfirmResetIncomes && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-lg shadow-xl w-full max-w-sm p-6 relative">
-            <h3 className="text-xl font-bold text-red-700 mb-4 text-center">Confirm Reset Incomes</h3>
-            <p className="text-gray-700 mb-6 text-center">
-              Are you absolutely sure you want to delete ALL your **income** transactions? This action cannot be undone. Expense transactions will remain.
-            </p>
-            <div className="flex justify-center gap-4">
-              <button
-                onClick={() => setShowConfirmResetIncomes(false)}
-                className="bg-gray-300 text-gray-800 px-5 py-2 rounded-lg hover:bg-gray-400 transition"
-              >
-                Cancel
-              </button>
-              <button
-                onClick={handleResetIncomes}
-                className="bg-red-600 text-white px-5 py-2 rounded-lg hover:bg-red-700 transition"
-              >
-                Reset Incomes Now
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Confirmation Modal for Single Transaction Delete */}
+      {/* NEW: Confirmation Modal for Single Transaction Delete */}
       {showConfirmDeleteTransaction && transactionToDelete && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
           <div className="bg-white rounded-lg shadow-xl w-full max-w-sm p-6 relative">
